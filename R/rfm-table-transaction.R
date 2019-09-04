@@ -134,12 +134,20 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 
   result$transaction_count <- as.numeric(result$transaction_count)
 
+  threshold <- tibble::tibble(recency_lower   = lower_recency,
+                              recency_upper   = upper_recency,
+                              frequency_lower = lower_frequency,
+                              frequency_upper = upper_frequency,
+                              monetary_lower  = lower_monetary,
+                              monetary_upper  = upper_monetary)
+
   out <- list(
     rfm            = result,
     analysis_date  = analysis_date,
     frequency_bins = frequency_bins,
     recency_bins   = recency_bins,
-    monetary_bins  = monetary_bins
+    monetary_bins  = monetary_bins,
+    threshold      = threshold
   )
 
   class(out) <- c("rfm_table_order", "tibble", "data.frame")
